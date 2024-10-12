@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_finished">Finished</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_home_carousel">Dicoding Event</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="finished_events">Finished Events</string>
 </resources>
