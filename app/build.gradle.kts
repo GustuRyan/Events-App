@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -48,7 +50,24 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.material.v1100alpha03)
+    implementation(libs.android.async.http)
+    implementation(libs.material.v190)
+    implementation(libs.material)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    implementation (libs.glide)
+    implementation(libs.filament.android)
+    annotationProcessor (libs.compiler)
+
+    implementation(libs.androidx.navigation.fragment.ktx.v274)
+    implementation(libs.androidx.navigation.ui.ktx.v274)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation (libs.materialsearchbar)
 }

@@ -13,10 +13,4 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="ThemeOverlay.Material3.Search" parent="ThemeOverlay.Material3">
-        <!-- Define necessary attributes for SearchBar -->
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
-    </style>
 </resources>
