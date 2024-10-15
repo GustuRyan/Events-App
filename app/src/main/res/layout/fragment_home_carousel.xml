@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
-    tools:context=".HomeCarouselFragment">
+    tools:context=".ui.home.HomeCarouselFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,9 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_home_carousel"
-            android:textColor="@color/material_dynamic_primary20"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,18 +29,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/upcoming_events"
+            android:textStyle="bold"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/tv_title_dicoding"
             app:layout_constraintTop_toBottomOf="@id/tv_title_dicoding" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_upcoming_events"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:paddingStart="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_header_upcoming"
             app:layout_constraintTop_toBottomOf="@id/tv_header_upcoming"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="60dp" />
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="RtlSymmetry" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
