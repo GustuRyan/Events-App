@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.eventlistapp.databinding.FragmentFinishedBinding
@@ -23,15 +22,11 @@ class FinishedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val finishedViewModel =
-            ViewModelProvider(this).get(FinishedViewModel::class.java)
+            ViewModelProvider(this)[FinishedViewModel::class.java]
 
         _binding = FragmentFinishedBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        finishedViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 
