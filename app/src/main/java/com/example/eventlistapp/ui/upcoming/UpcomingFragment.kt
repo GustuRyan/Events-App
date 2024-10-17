@@ -4,39 +4,62 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import com.example.eventlistapp.EventListFragment
 import com.example.eventlistapp.databinding.FragmentUpcomingBinding
+import com.mancj.materialsearchbar.MaterialSearchBar
 
 class UpcomingFragment : Fragment() {
 
     private var _binding: FragmentUpcomingBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
+    private val upcomingViewModel: UpcomingViewModel by activityViewModels()
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingViewModel =
-            ViewModelProvider(this).get(UpcomingViewModel::class.java)
-
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textDashboard
-        upcomingViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Load the EventListFragment
+        if (savedInstanceState == null) {
+            val eventListFragment = EventListFragment()
+            childFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainerView.id, eventListFragment)
+                .commit()
         }
-        return root
+
+        binding.searchBar.setOnSearchActionListener(object : MaterialSearchBar.OnSearchActionListener {
+            override fun onSearchStateChanged(enabled: Boolean) {
+                // Handle search state change if necessary
+            }
+
+            override fun onSearchConfirmed(text: CharSequence?) {
+                text?.let { searchText ->
+                    upcomingViewModel.searchEvents(searchText.toString(), "UpcomingFragment")
+                }
+            }
+
+            override fun onButtonClicked(buttonCode: Int) {
+                // Handle button clicks if necessary (e.g., speech button)
+            }
+        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        upcomingViewModel.clearEventList() // Clear the event list when the fragment stops
     }
 }
