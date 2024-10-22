@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
 }
@@ -50,9 +51,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.material.v1100alpha03)
     implementation(libs.android.async.http)
-    implementation(libs.material.v190)
     implementation(libs.material)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -70,4 +69,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation (libs.materialsearchbar)
+
+    implementation(libs.androidx.room.runtime)
+
+    // To use Kotlin Symbol Processing (KSP)
+    ksp(libs.androidx.room.compiler)
 }
