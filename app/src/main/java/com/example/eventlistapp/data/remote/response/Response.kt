@@ -1,4 +1,4 @@
-package com.example.eventlistapp
+package com.example.eventlistapp.data.remote.response
 
 
 import android.os.Parcelable
