@@ -26,4 +26,9 @@
     <string name="descriptions">Descriptions</string>
     <string name="reserve">Reserve</string>
     <string name="todo">TODO</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="recommendation_event">Recommendation event for you!</string>
+    <string name="title_favorite_event">Favorite Event</string>
 </resources>
