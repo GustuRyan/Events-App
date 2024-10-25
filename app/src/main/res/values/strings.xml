@@ -27,8 +27,11 @@
     <string name="reserve">Reserve</string>
     <string name="todo">TODO</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_favorite">Favorite</string>
     <string name="recommendation_event">Recommendation event for you!</string>
-    <string name="title_favorite_event">Favorite Event</string>
+    <string name="title_favorite_event">Favorite Events</string>
+    <string name="fullname">Ida Bagus Putu Ryan Paramasatya Putra</string>
+    <string name="email">a014b4ky1904@bangkit.academy</string>
+    <string name="setting">Setting</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

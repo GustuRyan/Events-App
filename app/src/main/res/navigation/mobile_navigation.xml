@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_detail_event"
-        android:name="com.example.eventlistapp.EventDetailFragment"
+        android:name="com.example.eventlistapp.ui.detail.EventDetailFragment"
         android:label="Event Detail"
         tools:layout="@layout/fragment_event_detail" >
         <!-- Define argument for eventId -->
@@ -47,8 +47,18 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.example.eventlistapp.ProfileFragment"
-        android:label="My Profile"
-        tools:layout="@layout/fragment_profile" />
+        android:id="@+id/navigation_setting"
+        android:name="com.example.eventlistapp.ui.setting.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.example.eventlistapp.ui.favorite.FavoriteFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_navigation_detail_event"
+            app:destination="@id/navigation_detail_event" />
+    </fragment>
 </navigation>
