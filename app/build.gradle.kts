@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -57,8 +56,11 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
+    implementation(libs.androidx.datastore.preferences)
+
     implementation (libs.glide)
     implementation(libs.filament.android)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
     annotationProcessor (libs.compiler)
 
     implementation(libs.androidx.navigation.fragment.ktx.v274)
@@ -71,6 +73,7 @@ dependencies {
     implementation (libs.materialsearchbar)
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
 
     // To use Kotlin Symbol Processing (KSP)
     ksp(libs.androidx.room.compiler)
