@@ -24,6 +24,7 @@ retrofit = "2.9.0"
 filamentAndroid = "1.17.1"
 roomRuntimeVersion = "2.6.1"
 datastorePreferencesCoreJvm = "1.1.1"
+workRuntimeKtx = "2.9.1"
 
 [libraries]
 android-async-http = { module = "com.loopj.android:android-async-http", version.ref = "androidAsyncHttp" }
@@ -54,8 +55,9 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDatastore" }
 androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version.ref = "datastorePreferencesCoreJvm" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "2.8.2" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version = "2.8.3" }
