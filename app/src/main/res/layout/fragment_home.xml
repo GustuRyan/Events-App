@@ -39,7 +39,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView"
-                android:name="com.example.eventlistapp.EventListFragment"
+                android:name="com.example.eventlistapp.ui.event_list.EventListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="128dp"

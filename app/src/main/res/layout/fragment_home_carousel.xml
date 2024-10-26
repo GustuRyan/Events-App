@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeCarouselFragment">
 
@@ -46,7 +45,8 @@
             app:layout_constraintStart_toStartOf="@id/tv_header_upcoming"
             app:layout_constraintTop_toBottomOf="@id/tv_header_upcoming"
             app:layout_constraintVertical_bias="1.0"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -1,5 +1,6 @@
 package com.example.eventlistapp.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.eventlistapp.CarouselAdapter
 import com.example.eventlistapp.R
 import com.example.eventlistapp.databinding.FragmentHomeCarouselBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 class HomeCarouselFragment : Fragment() {
     private var _binding: FragmentHomeCarouselBinding? = null
@@ -31,6 +33,7 @@ class HomeCarouselFragment : Fragment() {
         return binding.root // Return the root view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,23 +50,29 @@ class HomeCarouselFragment : Fragment() {
             adapter = carouselAdapter
         }
 
-        // Observe LiveData from the ViewModel
-        viewModel.eventList.observe(viewLifecycleOwner) { events ->
+        // Observe ViewModel data for events
+        viewModel.getEvents().observe(viewLifecycleOwner) { events ->
+            // Update adapter with new event list
             carouselAdapter.submitList(events)
+            carouselAdapter.notifyDataSetChanged()
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
-        }
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+        // Observe error messages from ViewModel
+        viewModel.getErrorMessage().observe(viewLifecycleOwner) { errorMessage ->
             errorMessage?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Fetch events from the ViewModel
-        viewModel.fetchEvents()
+        // Observe loading state to handle progress bar visibility
+        viewModel.getIsLoading().observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        // Fetch events from the ViewModel in a coroutine
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.fetchEvents()
+        }
     }
 
     private fun navigateSafely(action: NavDirections) {
