@@ -61,6 +61,7 @@ dependencies {
     implementation (libs.glide)
     implementation(libs.filament.android)
     implementation(libs.androidx.datastore.preferences.core.jvm)
+    implementation(libs.androidx.work.runtime.ktx)
     annotationProcessor (libs.compiler)
 
     implementation(libs.androidx.navigation.fragment.ktx.v274)
