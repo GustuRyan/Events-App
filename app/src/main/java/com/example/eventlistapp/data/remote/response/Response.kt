@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Response(
+    @field:SerializedName("listEvents")
+    val listEvents: List<Event?>? = null,
 
     @field:SerializedName("error")
     val error: Boolean? = null,
