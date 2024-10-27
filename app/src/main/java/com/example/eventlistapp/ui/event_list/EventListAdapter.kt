@@ -1,4 +1,4 @@
-package com.example.eventlistapp
+package com.example.eventlistapp.ui.event_list
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.eventlistapp.data.remote.response.Event
+import com.example.eventlistapp.R
 import com.example.eventlistapp.databinding.FragmentUpcomingCardBinding
 
 class EventListAdapter(private val onItemClick: (Event) -> Unit) : RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
@@ -51,7 +53,7 @@ class EventListAdapter(private val onItemClick: (Event) -> Unit) : RecyclerView.
 
             Glide.with(binding.ivCover.context)
                 .load(event.imageLogo)
-                .placeholder(R.drawable.teamwork)
+                .placeholder(R.mipmap.team_work)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivCover)
 

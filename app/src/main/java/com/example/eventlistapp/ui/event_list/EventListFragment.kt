@@ -1,4 +1,4 @@
-package com.example.eventlistapp
+package com.example.eventlistapp.ui.event_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels // Use activityViewModels for sh
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.eventlistapp.R
 import com.example.eventlistapp.databinding.FragmentEventListBinding
 import com.example.eventlistapp.ui.home.HomeFragment
 import com.example.eventlistapp.ui.home.HomeFragmentDirections
@@ -19,12 +20,13 @@ import com.example.eventlistapp.ui.finished.FinishedFragment
 import com.example.eventlistapp.ui.finished.FinishedFragmentDirections
 import com.example.eventlistapp.ui.upcoming.UpcomingViewModel // Import UpcomingViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class EventListFragment : Fragment() {
     private lateinit var binding: FragmentEventListBinding
     private lateinit var eventListAdapter: EventListAdapter
 
-    // Shared UpcomingViewModel with UpcomingFragment
     private val upcomingViewModel: UpcomingViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -63,23 +65,25 @@ class EventListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        // Observe UpcomingViewModel data
-        upcomingViewModel.eventList.observe(viewLifecycleOwner) { events ->
-            eventListAdapter.submitList(events) // Update the adapter with new data
+        // Observe ViewModel for events, loading state, and error messages
+        upcomingViewModel.getEvents().observe(viewLifecycleOwner) { events ->
+            eventListAdapter.submitList(events)
         }
 
-        upcomingViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE // Show or hide the progress bar
+        upcomingViewModel.getIsLoading().observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
         }
 
-        upcomingViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+        upcomingViewModel.getErrorMessage().observe(viewLifecycleOwner) { errorMessage ->
             errorMessage?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() // Show error message as a toast
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Fetch events based on the parent fragment type
-        fetchEvents()
+        // Launch fetchUpcomingEvents in a coroutine scope
+        viewLifecycleOwner.lifecycleScope.launch {
+            fetchUpcomingEvents()
+        }
     }
 
     private fun navigateSafely(action: NavDirections) {
@@ -93,21 +97,20 @@ class EventListFragment : Fragment() {
         }
     }
 
-    private fun fetchEvents() {
-        // Trigger the event fetch process based on the shared UpcomingViewModel
-        val parentFragmentName = when (parentFragment) {
-            is HomeFragment -> "HomeFragment"
-            is UpcomingFragment -> "UpcomingFragment"
-            is FinishedFragment -> "FinishedFragment"
-            else -> "UnknownFragment"
+    private fun fetchUpcomingEvents() {
+        val fragmentType = when (parentFragment) {
+            is HomeFragment -> 0
+            is UpcomingFragment -> 1
+            else -> -1
         }
 
-        // Trigger the event fetch process based on the shared UpcomingViewModel
-        upcomingViewModel.searchEvents("", parentFragmentName)
+        if (fragmentType != -1) {
+            upcomingViewModel.fetchUpcomingEvents(forceReload = false, fragmentType)
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        upcomingViewModel.clearEventList() // Clear the event list when the fragment stops
+        upcomingViewModel.clearEventList()
     }
 }
