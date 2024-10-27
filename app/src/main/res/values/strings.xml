@@ -34,4 +34,7 @@
     <string name="email">a014b4ky1904@bangkit.academy</string>
     <string name="setting">Setting</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="daily_reminder">Daily reminder</string>
+    <string name="enable_dark_mode">Enable dark mode</string>
+    <string name="enable_notification">Enable notification</string>
 </resources>
