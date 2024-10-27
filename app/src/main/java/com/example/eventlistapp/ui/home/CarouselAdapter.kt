@@ -1,4 +1,4 @@
-package com.example.eventlistapp
+package com.example.eventlistapp.ui.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.eventlistapp.data.remote.response.Event
+import com.example.eventlistapp.R
 import com.example.eventlistapp.databinding.FragmentFinishedCardBinding
 
 class CarouselAdapter(private val onItemClick: (Event) -> Unit) : RecyclerView.Adapter<CarouselAdapter.EventViewHolder>() {
@@ -40,7 +42,7 @@ class CarouselAdapter(private val onItemClick: (Event) -> Unit) : RecyclerView.A
             // Load the image into the ImageView using Glide
             Glide.with(binding.ivCover.context)
                 .load(event.imageLogo) // Load the image URL from the Event object
-                .placeholder(R.drawable.teamwork) // Optional: Set a placeholder image
+                .placeholder(R.mipmap.team_work) // Optional: Set a placeholder image
                 .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache strategy
                 .into(binding.ivCover) // Target ImageView
 
