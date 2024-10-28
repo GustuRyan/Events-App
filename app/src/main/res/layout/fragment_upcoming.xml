@@ -6,27 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.upcoming.UpcomingFragment">
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/searchBar"
-        style="@style/MaterialSearchBarLight"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll_searchbar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragmentContainerView"
-        android:layout_marginHorizontal="16dp"
-        app:mt_hint="Custom hint"
-        app:mt_maxSuggestionsCount="10"
-        app:mt_speechMode="true" />
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@id/fragmentContainerView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:background="?attr/colorPrimary">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                style="@style/MaterialSearchBarLight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mt_hint="Custom hint"
+                app:mt_maxSuggestionsCount="10"
+                app:mt_speechMode="true"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.eventlistapp.EventListFragment"
+        android:name="com.example.eventlistapp.ui.event_list.EventListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="131dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBar"/>
+        app:layout_constraintTop_toBottomOf="@id/ll_searchbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
