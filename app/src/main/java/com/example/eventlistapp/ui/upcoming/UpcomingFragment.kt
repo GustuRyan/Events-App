@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.eventlistapp.EventListFragment
+import com.example.eventlistapp.ui.event_list.EventListFragment
 import com.example.eventlistapp.databinding.FragmentUpcomingBinding
 import com.mancj.materialsearchbar.MaterialSearchBar
 
@@ -43,7 +43,7 @@ class UpcomingFragment : Fragment() {
 
             override fun onSearchConfirmed(text: CharSequence?) {
                 text?.let { searchText ->
-                    upcomingViewModel.searchEvents(searchText.toString(), "UpcomingFragment")
+                    upcomingViewModel.searchEvents(searchText.toString())
                 }
             }
 
