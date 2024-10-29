@@ -3,25 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:paddingHorizontal="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EventListFragment">
+    tools:context=".ui.event_list.EventListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.mancj.materialsearchbar.MaterialSearchBar
-            android:id="@+id/searchBar"
-            style="@style/MaterialSearchBarLight"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/ll_searchbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/recyclerView"
-            app:mt_hint="Custom hint"
-            app:mt_maxSuggestionsCount="10"
-            app:mt_speechMode="true" />
+            android:padding="2dp"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                style="@style/MaterialSearchBarLight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mt_hint="Custom hint"
+                app:mt_maxSuggestionsCount="10"
+                app:mt_speechMode="true"/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -30,7 +39,7 @@
             android:layout_marginTop="16dp"
             android:paddingBottom="56dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_searchbar" />
 
         <ProgressBar
             android:id="@+id/progressBar"
