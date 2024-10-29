@@ -1,4 +1,4 @@
-package com.example.eventlistapp
+package com.example.eventlistapp.ui.event_list
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.eventlistapp.R
 import com.example.eventlistapp.databinding.FragmentFinishedListBinding
 import com.example.eventlistapp.ui.home.HomeFragment
 import com.example.eventlistapp.ui.home.HomeFragmentDirections
@@ -18,14 +20,16 @@ import com.example.eventlistapp.ui.upcoming.UpcomingFragment
 import com.example.eventlistapp.ui.upcoming.UpcomingFragmentDirections
 import com.example.eventlistapp.ui.finished.FinishedFragment
 import com.example.eventlistapp.ui.finished.FinishedFragmentDirections
-import com.example.eventlistapp.ui.finished.FinishedListViewModel
+import com.example.eventlistapp.ui.finished.FinishedViewModel
+import com.example.eventlistapp.ui.home.CarouselAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mancj.materialsearchbar.MaterialSearchBar
+import kotlinx.coroutines.launch
 
 class FinishedListFragment : Fragment() {
     private lateinit var binding: FragmentFinishedListBinding
     private lateinit var carouselAdapter: CarouselAdapter
-    private val viewModel: FinishedListViewModel by viewModels() // Initialize the ViewModel
+    private val viewModel: FinishedViewModel by viewModels() // Use FinishedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,32 +79,40 @@ class FinishedListFragment : Fragment() {
             override fun onSearchConfirmed(text: CharSequence?) {
                 // Perform search when the user confirms the input
                 text?.let { searchText ->
-                    searchFinishedEvents(searchText.toString())
+                    lifecycleScope.launch {
+                        searchFinishedEvents(searchText.toString())
+                    }
                 }
             }
 
             override fun onButtonClicked(buttonCode: Int) {
-
+                // Handle button click
             }
         })
 
-        // Observe ViewModel data
-        viewModel.eventList.observe(viewLifecycleOwner) { events ->
+        // Observe ViewModel data for events
+        viewModel.getEvents().observe(viewLifecycleOwner) { events ->
+            // Update adapter with new event list
             carouselAdapter.submitList(events)
-            carouselAdapter.notifyDataSetChanged() // Notify adapter of data change
+            carouselAdapter.notifyDataSetChanged()
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
-        }
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+        // Observe error messages from ViewModel
+        viewModel.getErrorMessage().observe(viewLifecycleOwner) { errorMessage ->
             errorMessage?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
 
-        fetchFinishedEvents() // Fetch the finished events
+        // Observe loading state to handle progress bar visibility
+        viewModel.getIsLoading().observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        // Fetch the finished events initially when the fragment is loaded
+        lifecycleScope.launch {
+            fetchFinishedEvents()
+        }
     }
 
     private fun navigateSafely(action: NavDirections) {
@@ -115,11 +127,13 @@ class FinishedListFragment : Fragment() {
         }
     }
 
+    // Fetch finished events from the ViewModel
     private fun fetchFinishedEvents() {
         viewModel.fetchFinishedEvents()
     }
 
+    // Search finished events based on user input
     private fun searchFinishedEvents(searchText: String) {
-        viewModel.searchFinishedEvents(searchText)
+        viewModel.searchEvents(searchText)
     }
 }
