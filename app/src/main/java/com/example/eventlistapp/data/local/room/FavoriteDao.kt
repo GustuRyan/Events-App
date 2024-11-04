@@ -11,15 +11,19 @@ import com.example.eventlistapp.data.local.entity.Favorite
 
 @Dao
 interface FavoriteDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(favorite: Favorite)
+    @Query("SELECT * FROM favorite") // Adjust table name if necessary
+    fun getAllNotesLiveData(): LiveData<List<Favorite>>
 
-    @Update
-    fun update(favorite: Favorite)
+    @Query("SELECT * FROM favorite WHERE id = :eventId LIMIT 1")
+    suspend fun getFavoriteById(eventId: Int): Favorite?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(favorite: Favorite)
 
     @Delete
-    fun delete(favorite: Favorite)
+    suspend fun delete(favorite: Favorite)
 
-    @Query("SELECT * from favorite ORDER BY id ASC")
-    fun getAllNotes(): LiveData<List<Favorite>>
+    @Update
+    suspend fun update(favorite: Favorite)
 }
+
