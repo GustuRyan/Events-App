@@ -5,24 +5,32 @@ import androidx.lifecycle.LiveData
 import com.example.eventlistapp.data.local.entity.Favorite
 import com.example.eventlistapp.data.local.room.FavoriteDao
 import com.example.eventlistapp.data.local.room.FavoriteRoomDatabase
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class FavoriteRepository(application: Application) {
     private val mFavoriteDao: FavoriteDao
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+
     init {
         val db = FavoriteRoomDatabase.getDatabase(application)
         mFavoriteDao = db.favoriteDao()
     }
-    fun getAllFavorites(): LiveData<List<Favorite>> = mFavoriteDao.getAllNotes()
-    fun insert(favorite: Favorite) {
-        executorService.execute { mFavoriteDao.insert(favorite) }
+
+
+    suspend fun getFavoriteById(eventId: Int): Favorite? {
+        return mFavoriteDao.getFavoriteById(eventId)
     }
-    fun delete(favorite: Favorite) {
-        executorService.execute { mFavoriteDao.delete(favorite) }
+
+    suspend fun insert(favorite: Favorite) {
+        mFavoriteDao.insert(favorite)
     }
-    fun update(favorite: Favorite) {
-        executorService.execute { mFavoriteDao.update(favorite) }
+
+    suspend fun delete(favorite: Favorite) {
+        mFavoriteDao.delete(favorite)
+    }
+
+    // New function to return LiveData
+    fun getAllFavoritesLiveData(): LiveData<List<Favorite>> {
+        return mFavoriteDao.getAllNotesLiveData() // Make sure your DAO has this method
     }
 }
+
+
